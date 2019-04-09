@@ -41,12 +41,14 @@ union studentSiblings {
 bool taskPicker(struct globalArgs);
 int numberInput();
 bool isStudentAdded();
+bool isListShowed();
 //end of functions definition
 
 
 int main(int argc, char** argv) {
 	system("clear");
 	// default values
+	globalArgs.dataStructureType =  malloc(1);
 	globalArgs.addFunction = true;
 	globalArgs.deleteFunction = false;
 	globalArgs.findFunction = false;
@@ -158,6 +160,7 @@ bool isStudentAdded() {
 	instance->studentData = student;
 	instance->nextElement = HEAD;
 	HEAD = instance;
+	rewind(stdin);
 	printf("\nEnter student's first name: ");
 	while (!(student->firstName = malloc(textSize))){
 		return false;
@@ -196,4 +199,16 @@ bool isStudentAdded() {
 	}
 	rewind(stdin);
 	return true;
-}
+}// function that add student to the list
+
+bool isListShowed() {
+	struct listItem* student = HEAD;
+	while (student != NULL){
+		printf("Student's first name: %s", student->studentData->firstName);
+		printf("Student's second name: %s", student->studentData->secondName);
+		printf("Student's middle name: %s", student->studentData->middleName);
+		printf("---------------------------\n");
+		student = student->nextElement;
+	}
+	return true;
+}// function that show list of students
