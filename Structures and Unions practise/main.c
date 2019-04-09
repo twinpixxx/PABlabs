@@ -217,9 +217,8 @@ bool isListShowed() {
 
 
 bool isStudentFound() {
+	system("clear");
 	struct listItem* student = HEAD;
-	printf("Enter student's second name: ");
-	rewind(stdin);
 	char placeHolder = 'p',
 		*secondNameForSearch;
 	int textSize = 0;
@@ -227,6 +226,7 @@ bool isStudentFound() {
 	while (!(secondNameForSearch = malloc(1))){
 		return false;
 	}
+	rewind(stdin);
 	while (placeHolder != '\n'){
 		placeHolder = getchar();
 		secondNameForSearch = realloc(secondNameForSearch, ++textSize);
