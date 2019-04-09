@@ -99,7 +99,7 @@ int main(int argc, char** argv) {
 	if (taskPicker(globalArgs)) {
 		system("clear");
 		printf("\nSuccess.\n");
-		printf("Bye-Bye.");
+		printf("Bye-Bye.\n");
 		return 0;
 	} else {
 		system("clear");
@@ -180,7 +180,7 @@ bool isStudentAdded() {
 	}
 	while (placeHolder != '\n'){
 		placeHolder = getchar();
-		student->secondName = realloc(student->firstName, ++textSize);
+		student->secondName = realloc(student->secondName, ++textSize);
 		student->secondName[textSize - 1] = placeHolder;
 		student->secondName[textSize] = '\0';
 	}
@@ -193,13 +193,14 @@ bool isStudentAdded() {
 	}
 	while (placeHolder != '\n'){
 		placeHolder = getchar();
-		student->middleName = realloc(student->firstName, ++textSize);
+		student->middleName = realloc(student->middleName, ++textSize);
 		student->middleName[textSize - 1] = placeHolder;
 		student->middleName[textSize] = '\0';
 	}
 	rewind(stdin);
 	return true;
 }// function that add student to the list
+
 
 bool isListShowed() {
 	struct listItem* student = HEAD;
