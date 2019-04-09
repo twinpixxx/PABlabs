@@ -43,6 +43,7 @@ int numberInput();
 bool isStudentAdded();
 bool isListShowed();
 bool isStudentFound();
+bool isStudentDeleted();
 //end of functions definition
 
 
@@ -242,5 +243,50 @@ bool isStudentFound() {
 			printf("---------------------------\n");
 		}
 		student = student->nextElement;
+	}
+}
+
+
+bool isStudentDeleted() {
+	struct listItem* student = HEAD;
+	struct listItem* backward = NULL;
+	struct listItem* forward;
+	char placeHolder = 'p',
+			*nameForDelete;
+	int textSize = 0;
+	printf("\nEnter student's first name: ");
+	while (!(nameForDelete = malloc(1))){
+		return false;
+	}
+	rewind(stdin);
+	while (placeHolder != '\n') {
+		placeHolder = getchar();
+		nameForDelete = realloc(nameForDelete, ++textSize);
+		nameForDelete[textSize - 1] = placeHolder;
+		nameForDelete[textSize] = '\0';
+	}
+	rewind(stdin);
+	while (student != NULL) {
+		if (!strcmp(student->studentData->firstName, nameForDelete)) {
+			printf("deleting student: %s %s %s\n", student->studentData->firstName, student->studentData->secondName, student->studentData->middleName);
+			if (backward == NULL){
+				HEAD = student->nextElement;
+			}
+			else {
+				backward->nextElement = student->nextElement;
+			}
+
+			forward = student->nextElement;
+
+			free(student->studentData->firstName);
+			free(student->studentData);
+			free(student);
+
+			student = forward;
+
+		} else {
+			backward = student;
+			student = student->nextElement;
+		}
 	}
 }
