@@ -20,6 +20,7 @@ bool taskPicker(struct globalArgs);
 int numberInput();
 
 int main(int argc, char** argv) {
+	system("clear");
 	while (!(globalArgs.dataStructureType = malloc(100))) {
 		return 1;
 	}
@@ -52,7 +53,14 @@ int main(int argc, char** argv) {
 				globalArgs.findFunction = true;
 				break;
 			case 'h':
-				printf("helpa");
+				printf("These are common console arguments used in various situations:\n"
+					   "   -s        [data structure type] Struct\n"
+					   "   -u        [data structure type] Union\n"
+					   "   -a        Add students function\n"
+					   "   -l        Show all students function\n"
+					   "   -d        Delete student function\n"
+					   "   -f        Find student function\n");
+				return 0;
 				break;
 			default:
 				break;
@@ -77,7 +85,6 @@ int numberInput() {
 bool taskPicker(struct globalArgs args) {
 	bool task = true;
 	int taskNumber;
-	printf("Enter your task to perform.\n");
 	if (strcmp(globalArgs.dataStructureType, "structure")) {
 		printf("Type of your data structure is union.\n");
 	} else {
@@ -95,6 +102,7 @@ bool taskPicker(struct globalArgs args) {
 	if (globalArgs.deleteFunction) {
 		printf("4. Delete student.\n");
 	}
-	printf("5. Exit.");
+	printf("5. Exit.\n");
+	printf("Enter your task to perform: ");
 	taskNumber = numberInput();
 }// task picker function
