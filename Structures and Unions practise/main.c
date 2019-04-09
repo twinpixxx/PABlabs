@@ -125,26 +125,65 @@ int numberInput() {
 bool taskPicker(struct globalArgs args) {
 	bool task = true;
 	int taskNumber;
-	if (strcmp(globalArgs.dataStructureType, "structure")) {
-		printf("Type of your data structure is union.\n");
-	} else {
-		printf("Type of your data structure is struct.\n");
+	while (task){
+		if (strcmp(globalArgs.dataStructureType, "structure")) {
+			printf("Type of your data structure is union.\n");
+		} else {
+			printf("Type of your data structure is struct.\n");
+		}
+		if (globalArgs.addFunction) {
+			printf("1. Add student.\n");
+		}
+		if (globalArgs.showFunction) {
+			printf("2. Show list of students.\n");
+		}
+		if (globalArgs.findFunction) {
+			printf("3. Find student.\n");
+		}
+		if (globalArgs.deleteFunction) {
+			printf("4. Delete student.\n");
+		}
+		printf("5. Exit.\n");
+		printf("Enter your task to perform: ");
+		taskNumber = numberInput();
+		switch (taskNumber) {
+			case 1:
+				if (isStudentAdded()) {
+					printf("Success.\n");
+				} else {
+					printf("Error.\n");
+					return false;
+				}
+				break;
+			case 2:
+				if (isListShowed()) {
+					printf("Success.\n");
+				} else {
+					printf("Error.\n");
+					return false;
+				}
+				break;
+			case 3:
+				if (isStudentFound()) {
+					printf("Success.\n");
+				} else {
+					printf("Error.\n");
+					return false;
+				}
+				break;
+			case 4:
+				if (isStudentDeleted()) {
+					printf("Success.\n");
+				} else {
+					printf("Error.\n");
+					return false;
+				}
+				break;
+			case 5:
+				return true;
+		}
 	}
-	if (globalArgs.addFunction) {
-		printf("1. Add student.\n");
-	}
-	if (globalArgs.showFunction) {
-		printf("2. Show list of students.\n");
-	}
-	if (globalArgs.findFunction) {
-		printf("3. Find student.\n");
-	}
-	if (globalArgs.deleteFunction) {
-		printf("4. Delete student.\n");
-	}
-	printf("5. Exit.\n");
-	printf("Enter your task to perform: ");
-	taskNumber = numberInput();
+	return true;
 }// task picker function
 
 
