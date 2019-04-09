@@ -86,7 +86,16 @@ int main(int argc, char** argv) {
 		}
 		option = getopt(argc, argv, optString);
 	}
-	taskPicker(globalArgs);
+	if (taskPicker(globalArgs)) {
+		system("clear");
+		printf("\nSuccess.\n");
+		printf("Bye-Bye.");
+		return 0;
+	} else {
+		system("clear");
+		printf("\nError.\n");
+		return 1;
+	}
 	return 0;
 }
 
