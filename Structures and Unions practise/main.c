@@ -275,15 +275,11 @@ bool isStudentDeleted() {
 			else {
 				backward->nextElement = student->nextElement;
 			}
-
 			forward = student->nextElement;
-
 			free(student->studentData->firstName);
 			free(student->studentData);
 			free(student);
-
 			student = forward;
-
 		} else {
 			backward = student;
 			student = student->nextElement;
