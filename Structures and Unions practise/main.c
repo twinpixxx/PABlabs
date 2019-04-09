@@ -3,6 +3,10 @@
 #include <stdbool.h>
 #include <unistd.h>
 #include <string.h>
+#include <time.h>
+
+#define consoleClear system("clear");
+
 
 struct globalArgs {
 	char *dataStructureType;
@@ -44,6 +48,7 @@ bool isStudentAdded();
 bool isListShowed();
 bool isStudentFound();
 bool isStudentDeleted();
+void delay(int);
 //end of functions definition
 
 
@@ -99,13 +104,15 @@ int main(int argc, char** argv) {
 		option = getopt(argc, argv, optString);
 	}
 	if (taskPicker(globalArgs)) {
-		system("clear");
+		consoleClear
 		printf("\nSuccess.\n");
 		printf("Bye-Bye.\n");
+		delay(250);
 		return 0;
 	} else {
-		system("clear");
+		consoleClear
 		printf("\nError.\n");
+		delay(250);
 		return 1;
 	}
 	return 0;
@@ -125,7 +132,8 @@ int numberInput() {
 bool taskPicker(struct globalArgs args) {
 	bool task = true;
 	int taskNumber;
-	while (task){
+	while (task) {
+		delay(500);
 		if (strcmp(globalArgs.dataStructureType, "structure")) {
 			printf("Type of your data structure is union.\n");
 		} else {
@@ -148,36 +156,44 @@ bool taskPicker(struct globalArgs args) {
 		taskNumber = numberInput();
 		switch (taskNumber) {
 			case 1:
+				consoleClear
 				if (isStudentAdded()) {
 					printf("Success.\n");
 				} else {
 					printf("Error.\n");
 					return false;
 				}
+				consoleClear
 				break;
 			case 2:
+				consoleClear
 				if (isListShowed()) {
 					printf("Success.\n");
 				} else {
 					printf("Error.\n");
 					return false;
 				}
+				consoleClear
 				break;
 			case 3:
+				consoleClear
 				if (isStudentFound()) {
 					printf("Success.\n");
 				} else {
 					printf("Error.\n");
 					return false;
 				}
+				consoleClear
 				break;
 			case 4:
+				consoleClear
 				if (isStudentDeleted()) {
 					printf("Success.\n");
 				} else {
 					printf("Error.\n");
 					return false;
 				}
+				consoleClear
 				break;
 			case 5:
 				return true;
@@ -244,6 +260,7 @@ bool isStudentAdded() {
 
 
 bool isListShowed() {
+	rewind(stdin);
 	struct listItem* student = HEAD;
 	while (student != NULL){
 		printf("Student's first name: %s", student->studentData->firstName);
@@ -252,6 +269,8 @@ bool isListShowed() {
 		printf("---------------------------\n");
 		student = student->nextElement;
 	}
+	printf("Press any key to continue.");
+	getchar();
 	return true;
 }// function that show list of students
 
@@ -325,3 +344,15 @@ bool isStudentDeleted() {
 		}
 	}
 }
+
+
+void delay(int number_of_seconds) {
+	// Converting time into milli_seconds
+	int milli_seconds = 1000 * number_of_seconds;
+
+	// Stroing start time
+	clock_t start_time = clock();
+
+	// looping till required time is not acheived
+	while (clock() < start_time + milli_seconds);
+} // delay function
