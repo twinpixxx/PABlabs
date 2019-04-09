@@ -42,6 +42,7 @@ bool taskPicker(struct globalArgs);
 int numberInput();
 bool isStudentAdded();
 bool isListShowed();
+bool isStudentFound();
 //end of functions definition
 
 
@@ -213,3 +214,33 @@ bool isListShowed() {
 	}
 	return true;
 }// function that show list of students
+
+
+bool isStudentFound() {
+	struct listItem* student = HEAD;
+	printf("Enter student's second name: ");
+	rewind(stdin);
+	char placeHolder = 'p',
+		*secondNameForSearch;
+	int textSize = 0;
+	printf("\nEnter student's second name: ");
+	while (!(secondNameForSearch = malloc(1))){
+		return false;
+	}
+	while (placeHolder != '\n'){
+		placeHolder = getchar();
+		secondNameForSearch = realloc(secondNameForSearch, ++textSize);
+		secondNameForSearch[textSize - 1] = placeHolder;
+		secondNameForSearch[textSize] = '\0';
+	}
+	rewind(stdin);
+	while (student != NULL){
+		if (!strcmp(student->studentData->secondName, secondNameForSearch)){
+			printf("Student's first name: %s", student->studentData->firstName);
+			printf("Student's second name: %s", student->studentData->secondName);
+			printf("Student's middle name: %s", student->studentData->middleName);
+			printf("---------------------------\n");
+		}
+		student = student->nextElement;
+	}
+}
