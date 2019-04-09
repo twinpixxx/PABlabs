@@ -24,6 +24,12 @@ struct student {
 };
 
 
+struct listItem {
+	struct student* studentData;
+	struct listItem* nextElement;
+} *HEAD = NULL;
+
+
 union studentSiblings {
 	char* studentFather;
 	char* studentMother;
