@@ -36,14 +36,16 @@ union studentSiblings {
 	char* studentBrother;
 };
 
+
+//start of functions definition
 bool taskPicker(struct globalArgs);
 int numberInput();
+bool isStudentAdded();
+//end of functions definition
+
 
 int main(int argc, char** argv) {
 	system("clear");
-	while (!(globalArgs.dataStructureType = malloc(100))) {
-		return 1;
-	}
 	// default values
 	globalArgs.addFunction = true;
 	globalArgs.deleteFunction = false;
@@ -55,9 +57,15 @@ int main(int argc, char** argv) {
 	while (option != -1) {
 		switch (option) {
 			case 's':
+				while (!(globalArgs.dataStructureType = malloc(10))) {
+					return 1;
+				}
 				globalArgs.dataStructureType = "structure";
 				break;
 			case 'u':
+				while (!(globalArgs.dataStructureType = malloc(6))) {
+					return 1;
+				}
 				globalArgs.dataStructureType = "union";
 				break;
 			case 'a':
@@ -134,3 +142,58 @@ bool taskPicker(struct globalArgs args) {
 	printf("Enter your task to perform: ");
 	taskNumber = numberInput();
 }// task picker function
+
+
+bool isStudentAdded() {
+	struct student* student;
+	struct listItem* instance;
+	int textSize = 0;
+	char placeHolder = 'p';
+	if (!(student = malloc(sizeof(struct student)))){
+		return false;
+	}
+	if (!(instance = malloc(sizeof(struct listItem)))){
+		return false;
+	}
+	instance->studentData = student;
+	instance->nextElement = HEAD;
+	HEAD = instance;
+	printf("\nEnter student's first name: ");
+	while (!(student->firstName = malloc(textSize))){
+		return false;
+	}
+	while (placeHolder != '\n'){
+		placeHolder = getchar();
+		student->firstName = realloc(student->firstName, ++textSize);
+		student->firstName[textSize - 1] = placeHolder;
+		student->firstName[textSize] = '\0';
+	}
+	rewind(stdin);
+	placeHolder = 'p';
+	textSize = 0;
+	printf("\nEnter student's second name: ");
+	while (!(student->secondName = malloc(textSize))){
+		return false;
+	}
+	while (placeHolder != '\n'){
+		placeHolder = getchar();
+		student->secondName = realloc(student->firstName, ++textSize);
+		student->secondName[textSize - 1] = placeHolder;
+		student->secondName[textSize] = '\0';
+	}
+	rewind(stdin);
+	placeHolder = 'p';
+	textSize = 0;
+	printf("\nEnter student's middle name: ");
+	while (!(student->middleName = malloc(textSize))){
+		return false;
+	}
+	while (placeHolder != '\n'){
+		placeHolder = getchar();
+		student->middleName = realloc(student->firstName, ++textSize);
+		student->middleName[textSize - 1] = placeHolder;
+		student->middleName[textSize] = '\0';
+	}
+	rewind(stdin);
+	return true;
+}
