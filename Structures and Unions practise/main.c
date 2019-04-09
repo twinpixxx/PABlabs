@@ -16,6 +16,20 @@ struct globalArgs {
 static const char *optString = "suadflh";
 
 
+struct student {
+	char* firstName;
+	char* middleName;
+	char* secondName;
+	union studentSiblings* siblings;
+};
+
+
+union studentSiblings {
+	char* studentFather;
+	char* studentMother;
+	char* studentBrother;
+};
+
 bool taskPicker(struct globalArgs);
 int numberInput();
 
@@ -61,7 +75,6 @@ int main(int argc, char** argv) {
 					   "   -d        Delete student function\n"
 					   "   -f        Find student function\n");
 				return 0;
-				break;
 			default:
 				break;
 		}
