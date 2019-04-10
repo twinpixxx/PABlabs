@@ -7,7 +7,6 @@
 ### Functions list:
 
 ~~~c
-```
 int numberInput();
 bool taskPicker(struct globalArgs);
 bool isStudentAdded(struct globalArgs args, bool);
@@ -16,7 +15,6 @@ bool isStudentFound();
 bool isStudentDeleted();
 void delay(int);
 /* bool functions were imperative */
-```
 ~~~
 
 ### Structions list:
@@ -24,7 +22,6 @@ void delay(int);
 ##### Task structures:
 
 ~~~c
-```
 /* main structure with basic information about student */
 struct student {
 	char* firstName;
@@ -46,13 +43,11 @@ struct listItem {
 	struct student* studentData;
 	struct listItem* nextElement;
 } *HEAD = NULL; 
-```
 ~~~
 
-#####Special structures:
+##### Special structures:
 
 ~~~c
-```
 /* structure with global arguments, that help us to work with command line arguments */
 struct globalArgs {
 	char* dataStructureType;
@@ -62,12 +57,11 @@ struct globalArgs {
 	bool showFunction;
 	char* sibling;
 } globalArgs;
-```
 ~~~
 
 
 
-###How does arguments parser works:
+### How does arguments parser works:
 
 > Program can work with such arguments as:
 >
@@ -82,7 +76,6 @@ struct globalArgs {
 > ​	-h — help menu
 
 ~~~c
-```
 	/* arguments to work with */
 	static const char *optString = "suadfdlh";
 
@@ -129,6 +122,5 @@ struct globalArgs {
 		}
 		option = getopt(argc, argv, optString);
 	}
-```
 ~~~
 
