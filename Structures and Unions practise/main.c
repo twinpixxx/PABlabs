@@ -138,7 +138,7 @@ bool taskPicker(struct globalArgs args) {
 	while (task) {
 		delay(500);
 		if (strcmp(globalArgs.dataStructureType, "structure")) {
-			printf("Type of your data structure is union.\n");
+			printf("Type of your data structure is struct + union.\n");
 		} else {
 			printf("Type of your data structure is struct.\n");
 		}
@@ -174,30 +174,26 @@ bool taskPicker(struct globalArgs args) {
 				if (isListShowed()) {
 					printf("Success.\n");
 				} else {
-					printf("Error.\n");
-					return false;
+					printf("You should add at least one student.\n");
 				}
-				consoleClear
 				break;
 			case 3:
 				consoleClear
 				if (isStudentFound()) {
 					printf("Success.\n");
 				} else {
-					printf("Error.\n");
+					printf("You should add at least one student.\n");
 					return false;
 				}
-				consoleClear
 				break;
 			case 4:
 				consoleClear
 				if (isStudentDeleted()) {
 					printf("Success.\n");
 				} else {
-					printf("Error.\n");
+					printf("You should add at least one student.\n");
 					return false;
 				}
-				consoleClear
 				break;
 			case 5:
 				return true;
@@ -382,6 +378,9 @@ bool isListShowed() {
 	rewind(stdin);
 	int studentNumber = 0;
 	struct listItem* student = HEAD;
+	if (student == NULL){
+		return false;
+	}
 	while (student != NULL){
 		printf("Info about %d student:\n", ++studentNumber);
 		printf("Student's first name: %s", student->studentData->firstName);
@@ -408,6 +407,9 @@ bool isListShowed() {
 bool isStudentFound() {
 	system("clear");
 	struct listItem* student = HEAD;
+	if (student == NULL) {
+		return false;
+	}
 	char placeHolder = 'p',
 		*secondNameForSearch;
 	int textSize = 0;
@@ -439,6 +441,9 @@ bool isStudentDeleted() {
 	struct listItem* student = HEAD;
 	struct listItem* backward = NULL;
 	struct listItem* forward;
+	if (student == NULL) {
+		return false;
+	}
 	char placeHolder = 'p',
 			*nameForDelete;
 	int textSize = 0;
