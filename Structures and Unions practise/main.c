@@ -53,7 +53,6 @@ void delay(int);
 
 
 int main(int argc, char** argv) {
-	system("clear");
 	// default values
 	globalArgs.dataStructureType =  malloc(1);
 	globalArgs.addFunction = true;
