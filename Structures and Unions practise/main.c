@@ -414,7 +414,7 @@ bool isStudentFound() {
 		char placeHolder = 'p';
 		char* siblingName;
 		int textSize = 0;
-		if(!(siblingName = malloc(textSize)) {
+		if(!(siblingName = malloc(textSize))) {
 			return false;
 		}
 		rewind(stdin);
@@ -478,56 +478,92 @@ bool isStudentFound() {
 
 
 bool isStudentDeleted() {
-	struct listItem* student = HEAD;
-	struct listItem* backward = NULL;
-	struct listItem* forward;
+	struct listItem *student = HEAD;
+	struct listItem *backward = NULL;
+	struct listItem *forward;
 	if (student == NULL) {
 		return false;
 	}
 	char placeHolder = 'p',
-			*nameForDelete;
+			*nameForDelete,
+			*siblingName;
 	int textSize = 0;
-	printf("\nEnter student's first name: ");
-	while (!(nameForDelete = malloc(1))){
-		return false;
-	}
-	rewind(stdin);
-	while (placeHolder != '\n') {
-		placeHolder = getchar();
-		nameForDelete = realloc(nameForDelete, ++textSize);
-		nameForDelete[textSize - 1] = placeHolder;
-		nameForDelete[textSize] = '\0';
-	}
-	rewind(stdin);
-	while (student != NULL) {
-		if (!strcmp(student->studentData->firstName, nameForDelete)) {
-			printf("deleting student: %s %s %s\n", student->studentData->firstName, student->studentData->secondName, student->studentData->middleName);
-			if (backward == NULL){
-				HEAD = student->nextElement;
+	if (strcmp(globalArgs.dataStructureType, "structure")) {
+		printf("\nEnter student's sibling name: ");
+		while (!(siblingName = malloc(1))) {
+			return false;
+		}
+		rewind(stdin);
+		while (placeHolder != '\n') {
+			placeHolder = getchar();
+			siblingName = realloc(siblingName, ++textSize);
+			siblingName[textSize - 1] = placeHolder;
+			siblingName[textSize] = '\0';
+		}
+		rewind(stdin);
+		while (student != NULL) {
+			if (((globalArgs.sibling == 'father') || (!strcmp(student->studentData->siblings->studentFather, siblingName)) ||
+					((globalArgs.sibling == 'father') || (!strcmp(student->studentData->siblings->studentFather, siblingName)) ||
+							((globalArgs.sibling == 'father') || (!strcmp(student->studentData->siblings->studentFather, siblingName)))))) {
+				printf("deleting student: %s %s %s\n", student->studentData->firstName,
+					   student->studentData->secondName, student->studentData->middleName);
+				if (backward == NULL) {
+					HEAD = student->nextElement;
+				} else {
+					backward->nextElement = student->nextElement;
+				}
+				forward = student->nextElement;
+				free(student->studentData->firstName);
+				free(student->studentData);
+				free(student);
+				student = forward;
+			} else {
+				backward = student;
+				student = student->nextElement;
 			}
-			else {
-				backward->nextElement = student->nextElement;
+		}
+	} else {
+		printf("\nEnter student's first name: ");
+		while (!(nameForDelete = malloc(1))) {
+			return false;
+		}
+		rewind(stdin);
+		while (placeHolder != '\n') {
+			placeHolder = getchar();
+			nameForDelete = realloc(nameForDelete, ++textSize);
+			nameForDelete[textSize - 1] = placeHolder;
+			nameForDelete[textSize] = '\0';
+		}
+		rewind(stdin);
+		while (student != NULL) {
+			if (!strcmp(student->studentData->firstName, nameForDelete)) {
+				printf("deleting student: %s %s %s\n", student->studentData->firstName,
+					   student->studentData->secondName, student->studentData->middleName);
+				if (backward == NULL) {
+					HEAD = student->nextElement;
+				} else {
+					backward->nextElement = student->nextElement;
+				}
+				forward = student->nextElement;
+				free(student->studentData->firstName);
+				free(student->studentData);
+				free(student);
+				student = forward;
+			} else {
+				backward = student;
+				student = student->nextElement;
 			}
-			forward = student->nextElement;
-			free(student->studentData->firstName);
-			free(student->studentData);
-			free(student);
-			student = forward;
-		} else {
-			backward = student;
-			student = student->nextElement;
 		}
 	}
-}
+	return true;
+}// function that delete student by his first name or by his sibling name
 
 
 void delay(int number_of_seconds) {
 	// Converting time into milli_seconds
 	int milli_seconds = 1000 * number_of_seconds;
-
 	// Stroing start time
 	clock_t start_time = clock();
-
-	// looping till required time is not acheived
+	// looping till required time is not achieved
 	while (clock() < start_time + milli_seconds);
 } // delay function
