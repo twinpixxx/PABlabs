@@ -9,11 +9,12 @@
 
 
 struct globalArgs {
-	char *dataStructureType;
+	char* dataStructureType;
 	bool addFunction;
 	bool findFunction;
 	bool deleteFunction;
 	bool showFunction;
+	char* sibling;
 } globalArgs;
 
 
@@ -44,7 +45,7 @@ union studentSiblings {
 //start of functions definition
 bool taskPicker(struct globalArgs);
 int numberInput();
-bool isStudentAdded();
+bool isStudentAdded(struct globalArgs args, bool);
 bool isListShowed();
 bool isStudentFound();
 bool isStudentDeleted();
@@ -55,6 +56,8 @@ void delay(int);
 int main(int argc, char** argv) {
 	// default values
 	globalArgs.dataStructureType =  malloc(1);
+	globalArgs.sibling = malloc(1);
+	globalArgs.sibling[0] = ' ';
 	globalArgs.addFunction = true;
 	globalArgs.deleteFunction = false;
 	globalArgs.findFunction = false;
@@ -129,7 +132,8 @@ int numberInput() {
 
 
 bool taskPicker(struct globalArgs args) {
-	bool task = true;
+	bool task = true,
+		flag = false;
 	int taskNumber;
 	while (task) {
 		delay(500);
@@ -156,12 +160,13 @@ bool taskPicker(struct globalArgs args) {
 		switch (taskNumber) {
 			case 1:
 				consoleClear
-				if (isStudentAdded()) {
+				if (isStudentAdded(args, flag)) {
 					printf("Success.\n");
 				} else {
 					printf("Error.\n");
 					return false;
 				}
+				flag = true;
 				consoleClear
 				break;
 			case 2:
@@ -202,7 +207,7 @@ bool taskPicker(struct globalArgs args) {
 }// task picker function
 
 
-bool isStudentAdded() {
+bool isStudentAdded(struct globalArgs args, bool flag) {
 	struct student* student;
 	struct listItem* instance;
 	int textSize = 0;
@@ -254,17 +259,143 @@ bool isStudentAdded() {
 		student->middleName[textSize] = '\0';
 	}
 	rewind(stdin);
+	if (strcmp(globalArgs.dataStructureType, "structure")) {
+		if (!(student->siblings = malloc(sizeof(union studentSiblings)))) {
+			return false;
+		}
+		if (flag == false) {
+			printf("\nWhich sibling would you like to add?\n");
+			printf("1.Father\n");
+			printf("2.Mother\n");
+			printf("3.Brother\n");
+			int siblingNumber = numberInput();
+			switch (siblingNumber) {
+				case 1:
+					rewind(stdin);
+					placeHolder = 'p';
+					textSize = 0;
+					printf("\nEnter student's sibling name: ");
+					if (!(student->siblings->studentFather = (char*)malloc(textSize))){
+						return false;
+					}
+					while (placeHolder != '\n'){
+						placeHolder = getchar();
+						student->siblings->studentFather = realloc(student->siblings->studentFather, ++textSize);
+						student->siblings->studentFather[textSize - 1] = placeHolder;
+						student->siblings->studentFather[textSize] = '\0';
+					}
+					rewind(stdin);
+					globalArgs.sibling = realloc(globalArgs.sibling, 7);
+					globalArgs.sibling = 'father';
+					break;
+				case 2:
+					rewind(stdin);
+					placeHolder = 'p';
+					textSize = 0;
+					printf("\nEnter student's sibling name: ");
+					if (!(student->siblings->studentMother = (char* )malloc(textSize))) {
+						return false;
+					}
+					while (placeHolder != '\n'){
+						placeHolder = getchar();
+						student->siblings->studentMother = realloc(student->siblings->studentMother, ++textSize);
+						student->siblings->studentMother[textSize - 1] = placeHolder;
+						student->siblings->studentMother[textSize] = '\0';
+					}
+					rewind(stdin);
+					globalArgs.sibling = realloc(globalArgs.sibling, 7);
+					globalArgs.sibling = 'mother';
+					break;
+				case 3:
+					rewind(stdin);
+					placeHolder = 'p';
+					textSize = 0;
+					printf("\nEnter student's sibling name: ");
+					while (!(student->siblings->studentBrother = malloc(textSize))){
+						return false;
+					}
+					while (placeHolder != '\n'){
+						placeHolder = getchar();
+						student->siblings->studentBrother = realloc(student->siblings->studentBrother, ++textSize);
+						student->siblings->studentBrother[textSize - 1] = placeHolder;
+						student->siblings->studentBrother[textSize] = '\0';
+					}
+					rewind(stdin);
+					globalArgs.sibling = realloc(globalArgs.sibling, 8);
+					globalArgs.sibling = 'brother';
+					break;
+			}
+		} else {
+			if (globalArgs.sibling == 'father') {
+				rewind(stdin);
+				placeHolder = 'p';
+				textSize = 0;
+				printf("\nEnter student's sibling name: ");
+				if (!(student->siblings->studentFather = (char*)malloc(textSize))){
+					return false;
+				}
+				while (placeHolder != '\n'){
+					placeHolder = getchar();
+					student->siblings->studentFather = realloc(student->siblings->studentFather, ++textSize);
+					student->siblings->studentFather[textSize - 1] = placeHolder;
+					student->siblings->studentFather[textSize] = '\0';
+				}
+				rewind(stdin);
+			} else if (globalArgs.sibling == 'mother') {
+				rewind(stdin);
+				placeHolder = 'p';
+				textSize = 0;
+				printf("\nEnter student's sibling name: ");
+				if (!(student->siblings->studentMother = (char*)malloc(textSize))){
+					return false;
+				}
+				while (placeHolder != '\n'){
+					placeHolder = getchar();
+					student->siblings->studentMother = realloc(student->siblings->studentFather, ++textSize);
+					student->siblings->studentMother[textSize - 1] = placeHolder;
+					student->siblings->studentMother[textSize] = '\0';
+				}
+				rewind(stdin);
+			} else if (globalArgs.sibling == 'brother') {
+				rewind(stdin);
+				placeHolder = 'p';
+				textSize = 0;
+				printf("\nEnter student's sibling name: ");
+				if (!(student->siblings->studentBrother = (char*)malloc(textSize))){
+					return false;
+				}
+				while (placeHolder != '\n'){
+					placeHolder = getchar();
+					student->siblings->studentBrother = realloc(student->siblings->studentFather, ++textSize);
+					student->siblings->studentBrother[textSize - 1] = placeHolder;
+					student->siblings->studentBrother[textSize] = '\0';
+				}
+				rewind(stdin);
+			}
+		}
+	}
 	return true;
 }// function that add student to the list
 
 
 bool isListShowed() {
 	rewind(stdin);
+	int studentNumber = 0;
 	struct listItem* student = HEAD;
 	while (student != NULL){
+		printf("Info about %d student:\n", ++studentNumber);
 		printf("Student's first name: %s", student->studentData->firstName);
 		printf("Student's second name: %s", student->studentData->secondName);
 		printf("Student's middle name: %s", student->studentData->middleName);
+		if (strcmp(globalArgs.dataStructureType, "structure")) {
+			if (globalArgs.sibling == 'father') {
+				printf("Student's sibling name: %s", student->studentData->siblings->studentFather);
+			} else if (globalArgs.sibling == 'mother') {
+				printf("Student's sibling name: %s", student->studentData->siblings->studentMother);
+			} else if (globalArgs.sibling == 'brother') {
+				printf("Student's sibling name: %s", student->studentData->siblings->studentBrother);
+			}
+		}
 		printf("---------------------------\n");
 		student = student->nextElement;
 	}
