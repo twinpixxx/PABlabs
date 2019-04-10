@@ -183,7 +183,6 @@ bool taskPicker(struct globalArgs args) {
 					printf("Success.\n");
 				} else {
 					printf("You should add at least one student.\n");
-					return false;
 				}
 				break;
 			case 4:
@@ -410,31 +409,72 @@ bool isStudentFound() {
 	if (student == NULL) {
 		return false;
 	}
-	char placeHolder = 'p',
-		*secondNameForSearch;
-	int textSize = 0;
-	printf("\nEnter student's second name: ");
-	while (!(secondNameForSearch = malloc(1))){
-		return false;
-	}
-	rewind(stdin);
-	while (placeHolder != '\n'){
-		placeHolder = getchar();
-		secondNameForSearch = realloc(secondNameForSearch, ++textSize);
-		secondNameForSearch[textSize - 1] = placeHolder;
-		secondNameForSearch[textSize] = '\0';
-	}
-	rewind(stdin);
-	while (student != NULL){
-		if (!strcmp(student->studentData->secondName, secondNameForSearch)){
-			printf("Student's first name: %s", student->studentData->firstName);
-			printf("Student's second name: %s", student->studentData->secondName);
-			printf("Student's middle name: %s", student->studentData->middleName);
-			printf("---------------------------\n");
+	if (strcmp(globalArgs.dataStructureType, "structure")) {
+		printf("\nEnter student's sibling name: ");
+		char placeHolder = 'p';
+		char* siblingName;
+		int textSize = 0;
+		if(!(siblingName = malloc(textSize)) {
+			return false;
 		}
-		student = student->nextElement;
+		rewind(stdin);
+		while (placeHolder != '\n'){
+			placeHolder = getchar();
+			siblingName = realloc(siblingName, ++textSize);
+			siblingName[textSize - 1] = placeHolder;
+			siblingName[textSize] = '\0';
+		}
+		rewind(stdin);
+		while (student != NULL) {
+			if ((globalArgs.sibling == 'father') || !strcmp(student->studentData->siblings->studentFather, siblingName)){
+				printf("Student's first name: %s", student->studentData->firstName);
+				printf("Student's second name: %s", student->studentData->secondName);
+				printf("Student's middle name: %s", student->studentData->middleName);
+				printf("Student's sibling name: %s", student->studentData->siblings->studentFather);
+				printf("---------------------------\n");
+			} else if ((globalArgs.sibling == 'brother') || !strcmp(student->studentData->siblings->studentMother, siblingName)){
+				printf("Student's first name: %s", student->studentData->firstName);
+				printf("Student's second name: %s", student->studentData->secondName);
+				printf("Student's middle name: %s", student->studentData->middleName);
+				printf("Student's sibling name: %s", student->studentData->siblings->studentMother);
+				printf("---------------------------\n");
+			} else if ((globalArgs.sibling == 'mother') || !strcmp(student->studentData->siblings->studentBrother, siblingName)){
+				printf("Student's first name: %s", student->studentData->firstName);
+				printf("Student's second name: %s", student->studentData->secondName);
+				printf("Student's middle name: %s", student->studentData->middleName);
+				printf("Student's sibling name: %s", student->studentData->siblings->studentBrother);
+				printf("---------------------------\n");
+			}
+			student = student->nextElement;
+		}
+	} else {
+		char placeHolder = 'p',
+				*secondNameForSearch;
+		int textSize = 0;
+		printf("\nEnter student's second name: ");
+		if (!(secondNameForSearch = malloc(1))){
+			return false;
+		}
+		rewind(stdin);
+		while (placeHolder != '\n'){
+			placeHolder = getchar();
+			secondNameForSearch = realloc(secondNameForSearch, ++textSize);
+			secondNameForSearch[textSize - 1] = placeHolder;
+			secondNameForSearch[textSize] = '\0';
+		}
+		rewind(stdin);
+		while (student != NULL) {
+			if (!strcmp(student->studentData->secondName, secondNameForSearch)){
+				printf("Student's first name: %s", student->studentData->firstName);
+				printf("Student's second name: %s", student->studentData->secondName);
+				printf("Student's middle name: %s", student->studentData->middleName);
+				printf("---------------------------\n");
+			}
+			student = student->nextElement;
+		}
 	}
-}
+	return true;
+}// function that search students by second name or by name of his sibling
 
 
 bool isStudentDeleted() {
