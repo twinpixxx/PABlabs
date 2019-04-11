@@ -110,6 +110,7 @@ int main(int argc, char** argv) {
 		printf("\nSuccess.\n");
 		printf("Bye-Bye.\n");
 		delay(250);
+		free(&globalArgs);
 		return 0;
 	} else {
 		consoleClear
@@ -484,11 +485,10 @@ bool isStudentDeleted() {
 	if (student == NULL) {
 		return false;
 	}
-	char placeHolder = 'p',
-			*nameForDelete,
-			*siblingName;
+	char placeHolder = 'p';
 	int textSize = 0;
 	if (strcmp(globalArgs.dataStructureType, "structure")) {
+		char* siblingName;
 		printf("\nEnter student's sibling name: ");
 		while (!(siblingName = malloc(1))) {
 			return false;
@@ -523,6 +523,7 @@ bool isStudentDeleted() {
 			}
 		}
 	} else {
+		char* nameForDelete;
 		printf("\nEnter student's first name: ");
 		while (!(nameForDelete = malloc(1))) {
 			return false;
