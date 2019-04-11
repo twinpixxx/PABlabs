@@ -110,7 +110,6 @@ int main(int argc, char** argv) {
 		printf("\nSuccess.\n");
 		printf("Bye-Bye.\n");
 		delay(250);
-		free(&globalArgs);
 		return 0;
 	} else {
 		consoleClear
