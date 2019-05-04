@@ -10,10 +10,10 @@
 
 struct globalArgs {
 	char* dataStructureType;
-	bool addFunction;
-	bool findFunction;
-	bool deleteFunction;
-	bool showFunction;
+	bool addFunction,
+		findFunction,
+		deleteFunction,
+		showFunction;
 	char* sibling;
 } globalArgs;
 
@@ -22,9 +22,9 @@ static const char *optString = "suadflh";
 
 
 struct student {
-	char* firstName;
-	char* middleName;
-	char* secondName;
+	char * firstName,
+		 * middleName,
+		 *secondName;
 	union studentSiblings* siblings;
 };
 
